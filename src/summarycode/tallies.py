@@ -304,7 +304,7 @@ class KeyFilesTallies(PostScanPlugin):
             help='Compute tallies for license, copyright and other scans for key, '
                  'top-level files. Key files are top-level codebase files such '
                  'as COPYING, README and package manifests as reported by the '
-                 '--classify option "is_legal", "is_readme", "is_manifest" '
+                 '--classify option "is_legal", "is_readme", "is_manifest", "is_notice" '
                  'and "is_top_level" flags.',
             help_group=POST_SCAN_GROUP,
             required_options=['classify', 'tallies']
@@ -334,7 +334,7 @@ def tally_codebase_key_files(codebase, field='tallies', **kwargs):
     # filter to get only key files
     key_files = (res for res in codebase.walk(topdown=True)
                  if (res.is_file and res.is_top_level
-                     and (res.is_readme or res.is_legal or res.is_manifest)))
+                     and (res.is_readme or res.is_legal or res.is_manifest or res.is_notice)))
 
     for resource in key_files:
         for key, values in talliable_values_by_key.items():
